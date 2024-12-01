@@ -28,12 +28,31 @@ function branch(len){
     rotate(random(50, 60));
     branch(len * random(0.7, 0.9));
     } else{
+        const r = 200 + random(-20, 20);
+        const g = 120 + random(-20, 20);
+        const b = 40 + random(-20, 20);
+        fill(r, g, b, 120);
         noStroke();
-        var r = 80 + random(-20, 20);
-        var g = 120 + random(-20, 20);
-        var b = 40 + random(-20, 20);
-        fill(r, g, b);
-        ellipse(0,0,10);
+
+        beginShape();
+        // setting 45<i<135 to avoid drawing a full circle
+        //first half of the leaves
+            for(let i = 45; i < 135; i++){
+                const rad = 15;
+                const x = rad * cos(i);
+                const y = rad * sin(i);
+                vertex(x, y);
+            }
+            //second half
+            for(let i = 135; i > 40; i--){
+                const rad = 15;
+                const x = rad * cos(i);
+                const y = rad * sin(-i) + 20;
+                vertex(x, y);
+            }
+        endShape(CLOSE);
+        fill(r, 20, b);
+        ellipse(0,0,9);
     }
     pop();
 }
