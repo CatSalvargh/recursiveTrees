@@ -1,58 +1,116 @@
 //Credit:training exercise from Colorful Coding, with personal modifications (https://www.youtube.com/watch?v=-3HwUKsovBE&list=PPSV)
 
 function setup(){
-    createCanvas(800, 800);
-    // createCanvas(windowWidth, windowHeight);
+    createCanvas(windowWidth, windowHeight, WEBGL);
     angleMode(DEGREES);
 
-    noLoop();
+    noLoop(); //Comment noLoop() for rotation
 }
 
 function draw(){
-    background(150);
+    background(200);
 
-    translate(width / 2, height / 2 + 200);
+    randomSeed(1); //normalize random values
 
+    translate(0, 200, 0);
+
+    rotateY(frameCount);
     branch(100);
+
 }
 
 function branch(len){
-    push();
-    if (len >10){
-    strokeWeight(map(len, 10, 100, 1, 15));
-    stroke(70, 40, 15);
-    line(0,0,0,-len);
-    translate(0, -len);
-    rotate(random(-25, -32));
-    branch(len * random(0.7, 0.9));
-    rotate(random(50, 60));
-    branch(len * random(0.7, 0.9));
-    } else{
-        const r = 200 + random(-20, 20);
-        const g = 120 + random(-20, 20);
+    strokeWeight(map(len, 10, 100, 0.5, 5));
+    fill(100, 40, 20);
+    line(0, 0, 0, 0, -len -2, 0);
+
+    translate(0, -len, 0);
+
+    if (len > 10){
+        //for() to create 3 branches at the end of each branch
+        for(let i = 0; i < 3; i++){
+            rotateY(120);
+            
+            push();
+            
+            rotateZ(30);
+            
+            branch(len * 0.7);
+            pop();
+        }
+    } else {
+
+        const r = 180 + random(-20, 20);
+        const g = 100 + random(-20, 20);
         const b = 40 + random(-20, 20);
-        fill(r, g, b, 120);
+
+        fill(r, g, b, 200);
         noStroke();
 
+        translate(5, 0, 0);
+
+        rotateZ(90)
+
         beginShape();
-        // setting 45<i<135 to avoid drawing a full circle
-        //first half of the leaves
-            for(let i = 45; i < 135; i++){
-                const rad = 15;
-                const x = rad * cos(i);
-                const y = rad * sin(i);
-                vertex(x, y);
-            }
-            //second half
-            for(let i = 135; i > 40; i--){
-                const rad = 15;
-                const x = rad * cos(i);
-                const y = rad * sin(-i) + 20;
-                vertex(x, y);
-            }
+        for(let i = 45; i < 135; i++){
+            const rad = 7;
+            const x = rad * cos(i);
+            const y = rad * sin(i);
+            vertex(x, y);
+        }
+        for(let i = 135; i > 45; i--){
+            const rad = 7;
+            const x = rad * cos(i);
+            const y = rad * sin(-i) + 10;
+            vertex(x, y);
+        }
         endShape(CLOSE);
-        fill(r, 20, b);
-        ellipse(0,0,9);
     }
-    pop();
+
 }
+// function branch(len){
+//     strokeWeight(map(len, 10, 100, 0.5, 5));
+//     stroke(70, 40, 20);
+
+//     line(0, 0 ,0 , 0, -len -2, 0);
+
+//     translate(0, -len, 0);
+
+//     if (len > 10){
+//         for (let i = 0; i < 3; i++){
+//             rotateY(random(100, 140));
+           
+//             push();
+//             rotateZ(random(20, 50));
+//             branch(len * 0.7);
+//             pop();
+//         }
+//     } else {
+//         const r = 220 + random(-20, 20);
+//         const g = 120 + random(-20, 20);
+//         const b = 40 + random(-20, 20);
+        
+//         fill(r, g, b, 150);
+//         // noStroke();
+        
+//         translate(5, 0, 0);
+//         rotateZ(90);
+
+//         beginShape();
+//         for(let i = 45; i < 135; i++){
+//             const rad = 7;
+//             const x = rad * cos(i);
+//             const y = rad * sin(i);
+//             vertex(x, y);
+//         }
+//         for(let i = 135; i > 45; i--){
+//             const rad = 7;
+//             const x = rad * cos(i);
+//             const y = rad * sin(-i) + 10;
+//             vertex(x, y);
+//         }
+//         endShape(CLOSE);
+//             // fill(r, 20, b);
+//             // ellipse(0,0,9);
+//     }
+// }
